@@ -1,0 +1,293 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand letratitulo" href="#page-top"> <strong>Nexos</strong> </a>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class=" mx-lg-1 "><a class="nav-link py-3 px-0 letranavegacion" href="#cargo">Cargo</a></li>
+        <li class=" mx-lg-1 "><a class="nav-link py-3 px-0 letranavegacion" href="#usuario">Usuario</a></li>
+        <li class=" mx-lg-1 "><a class="nav-link py-3 px-0 letranavegacion" href="#mercancia">Mercancia</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Cargo Section-->
+<section class="page-section portfolio" style="margin-top: 10%;" id="cargo">
+  <div class="container">
+
+    <h2 class=" text-center text-uppercase text-primary ">Cargo</h2>
+
+    <!-- cargo -->
+    <div class="row justify-content-center">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" class="form-control tamañoSelect" [(ngModel)]="nombreCargo" id="name" name="user_name">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" style="margin-top: 12px">
+            <button (click)="GuardarCargo(nombreCargo)" class="btn btn-primary">Crear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row col-md-12 contenedor">
+          <div class="col-md-6">
+            <input type="text" class="form-control contenedor2" name="searchCargo" placeholder="Buscar"
+              [(ngModel)]="searchCargo">
+          </div>
+          <div class="col-md-6">
+            <select class="form-control contenedor2" name="tablaCargos" [(ngModel)]="tablaCargos">
+              <option value="5" selected="selected">Cargos por página</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <table width="60%" class="table table-striped table-hover" id="dataTables-example" id="tablaDistancia">
+          <thead>
+            <tr class="cabezaTabla2">
+              <th class="center">Nombre Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let dato of dataCargos | cargos: searchCargo |  paginate: { itemsPerPage: itempagePuntos, currentPage: mp1, id: 'tablecargos' }"
+              class="odd gradeX">
+              <td style="text-align: center;">{{dato.nombre}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="centrarpaginacion">
+          <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="mp1 = $event"
+            id="tablecargos"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- usuario Section-->
+<hr>
+<section class="page-section text-dark mb-0 " id="usuario">
+  <div class="container">
+
+    <h2 class=" text-center text-uppercase text-success">Usuarios</h2>
+
+    <!-- usuario -->
+    <div class="row justify-content-center">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="nameUsuario">Nombre:</label>
+            <input type="text" class="form-control tamañoSelect" [(ngModel)]="usuario.nombre" id="nameUsuario"
+              name="username">
+          </div>
+          <div class="form-group">
+            <label for="nameUsuario">Cargo:</label>
+            <select class="form-control tamañoSelect" [(ngModel)]="usuario.cargo" name="usuario.cargo">
+              <option [value]=""></option>
+              <option [value]="cargo.id" *ngFor="let cargo of dataCargos">{{cargo.nombre}}</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <label for="ageUsuario">Edad:</label>
+          <input type="text" (keypress)="kPNumeros($event)" class="form-control tamañoSelect"
+            [(ngModel)]="usuario.edad" id="name" name="user_name">
+          <div>
+            <label> Ingreso a la compañia </label>
+            <br>
+            <my-date-picker class="valid tamañoSelect" name="usuario.fecha_ingreso" #fecha="ngModel"
+              id="example-date-input" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)"
+              [(ngModel)]="usuario.fecha_ingreso" required>
+            </my-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top: 12px; text-align: center; margin-top: 5%;">
+        <button (click)="GuardarUsuario(usuario)" class="btn btn-success">Crear</button>
+      </div>
+
+      <div class="row">
+        <div class="row col-md-12 contenedor">
+          <div class="col-md-6">
+            <input type="text" class="form-control contenedor2" name="searchUsuario" placeholder="Buscar"
+              [(ngModel)]="searchUsuario">
+          </div>
+          <div class="col-md-6">
+            <select class="form-control contenedor2" name="tablaUsuarios" [(ngModel)]="tablaUsuarios">
+              <option value="5" selected="selected">Usuarios por página</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <table width="60%" class="table table-striped table-hover" id="dataTables-example" id="tablaDistancia">
+          <thead>
+            <tr class="cabezaTabla2">
+              <th class="center">nombre usuario</th>
+              <th class="center">edad usuario</th>
+              <th class="center">cargo usuario</th>
+              <th class="center">Ingreso compañia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let dato of dataUsuarios | usuario: searchUsuario |  paginate: { itemsPerPage: itempagePuntos, currentPage: mp1, id: 'tableUsuarios' }"
+              class="odd gradeX">
+              <td style="text-align: center;">{{dato.nombre}}</td>
+              <td style="text-align: center;">{{dato.edad}}</td>
+              <td style="text-align: center;">{{dato.cargo.nombre}}</td>
+              <td style="text-align: center;">{{dato.fecha_ingreso}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="centrarpaginacion">
+          <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="mp = $event"
+            id="tableUsuarios"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+<!-- mercancia Section-->
+<section class="page-section" id="mercancia">
+  <div class="container">
+
+    <h2 class=" text-center text-uppercase text-warning">Mercancia</h2>
+
+    <!-- mercancia -->
+    <div class="form-group" *ngIf="!bloqueador">
+      <label for="nameUsuario">Usuario:</label>
+      <select class="form-control tamañoSelect" [(ngModel)]="producto.usuario" name="usuario.usuario">
+        <option [value]=""></option>
+        <option [value]="cargo.id" *ngFor="let cargo of dataUsuarios">{{cargo.nombre}}</option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="bloqueador">
+      <label for="nameUsuario">Usuario:</label>
+      <select class="form-control tamañoSelect" [(ngModel)]="producto.usuario_modificar" name="usuario.usuario_modificacion">
+        <option [value]=""></option>
+        <option [value]="cargo.id" *ngFor="let cargo of dataUsuarios">{{cargo.nombre}}</option>
+      </select>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="nameProducto">Nombre Producto:</label>
+            <input type="text" class="form-control tamañoSelect" [(ngModel)]="producto.nombre_producto" id="nameProducto"
+              name="productname">
+          </div>
+          <div>
+            <label for="ageUsuario">Cantidad:</label>
+            <input type="text" (keypress)="kPNumeros($event)" class="form-control tamañoSelect"
+              [(ngModel)]="producto.cantidad" id="name" name="user_name">
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <div>
+            <label> fecha de ingreso </label>
+            <br>
+            <my-date-picker class="valid tamañoSelect" name="producto.fecha_ing_comp" #fecha_ing_comp="ngModel"
+              id="example-date-input" [options]="myDatePickerOptions2" (dateChanged)="onDateChanged2($event)"
+              [(ngModel)]="producto.fecha_ing_comp" required>
+            </my-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"  *ngIf="!bloqueador" style="margin-top: 12px; text-align: center; margin-top: 5%;">
+        <button (click)="GuardarProducto(producto)" class="btn btn-warning">Crear</button>
+      </div>
+      <div class="form-group"   *ngIf="bloqueador" style="margin-top: 12px; text-align: center; margin-top: 5%;">
+        <button (click)="ModificarProducto(producto)" class="btn btn-warning">Modificar</button>
+      </div>
+
+      <div class="row">
+        <div class="row col-md-12 contenedor">
+          <div class="col-md-6">
+            <input type="text" class="form-control contenedor2" name="searchMercancia" placeholder="Buscar"
+              [(ngModel)]="searchMercancia">
+          </div>
+          <div class="col-md-6">
+            <select class="form-control contenedor2" name="tablaMercancia" [(ngModel)]="tablaMercancia">
+              <option value="5" selected="selected">Mercancia por página</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <table width="60%" class="table table-striped table-hover" id="dataTables-example" id="tablaDistancia">
+          <thead>
+            <tr class="cabezaTabla2">
+              <th class="center">Nombre usuario</th>
+              <th class="center">Nombre Mercancia</th>
+              <th class="center">Fecha Ingreso</th>
+              <th class="center">Cantidad</th>
+              <th class="center">Modificar</th>
+              <th class="center">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let dato of dataMercancia | mercancia: searchMercancia |  paginate: { itemsPerPage: itempagePuntos, currentPage: mp2, id: 'tableMercancia' }"
+              class="odd gradeX">
+              <td style="text-align: center;">{{dato.usuario.nombre}}</td>
+              <td style="text-align: center;">{{dato.nombre_producto}}</td>
+              <td style="text-align: center;">{{dato.fecha}}</td>
+              <td style="text-align: center;">{{dato.cantidad}}</td>
+              <td class="center">
+                <a title="Modificar" role="button">
+                  <img src="assets/img/editar.png" width="30" height="30" class="btnReportes" (click)="llenarInfo(dato)">
+                </a>
+              </td>
+              <td>
+                <a  *ngIf="dato.usuario.id==producto.usuario && !bloqueador" title="Eliminar" role="button" (click)="EliminarProducto(dato)">
+                  <img src="assets/img/delete.png" width="30" height="30" class="btnReportes">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="centrarpaginacion">
+          <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="mp = $event"
+            id="tableMercancia"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<router-outlet></router-outlet>

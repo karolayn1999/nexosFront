@@ -1,0 +1,27 @@
+.letratitulo{
+    color:#ffffff;
+    font-size:40px;
+}
+
+.letranavegacion{
+    color:#ffffff !important;
+    font-size:25px;
+}
+
+.contenedor{
+    background-color:#3B5998 !important;
+    height: 50px;
+    margin-top: 20px;
+}
+
+.contenedor2{
+    margin-top: 5px;
+}
+
+.centrarpaginacion {
+    text-align: center !important;
+}
+
+.tamañoSelect{
+    width: 100% !important;
+}

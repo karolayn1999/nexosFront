@@ -1,0 +1,78 @@
+-- Creacion Base de Datos
+
+CREATE DATABASE prueba_nexos
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Colombia.1252'
+    LC_CTYPE = 'Spanish_Colombia.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+	
+-- Creacion tabla cargos
+CREATE TABLE IF NOT EXISTS public.cargo
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nombre character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT cargo_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.cargo
+    OWNER to postgres;
+	
+
+-- Creacion tabla Usuarios
+CREATE TABLE IF NOT EXISTS public.usuario
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nombre character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    edad character varying COLLATE pg_catalog."default" NOT NULL,
+    fecha_ingreso date NOT NULL,
+    cargo_id integer NOT NULL,
+    CONSTRAINT usuario_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_cargo FOREIGN KEY (cargo_id)
+        REFERENCES public.cargo (id) MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.usuario
+    OWNER to postgres;
+	
+--Creacion Tabla mercancia
+CREATE TABLE IF NOT EXISTS public.mercancia
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nombre_producto character varying COLLATE pg_catalog."default" NOT NULL,
+    cantidad integer NOT NULL,
+    fecha date NOT NULL,
+    cod_usuario integer NOT NULL,
+    fecha_modificacion date,
+    cod_usuario_modificacion integer,
+    CONSTRAINT fkid_usuario FOREIGN KEY (cod_usuario_modificacion)
+        REFERENCES public.usuario (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT fktest FOREIGN KEY (cod_usuario)
+        REFERENCES public.usuario (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.mercancia
+    OWNER to postgres;
